@@ -1,104 +1,159 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  ArrowDownTrayIcon,
+  ArrowRightIcon,
+  ArrowUpRightIcon,
+  CodeBracketIcon,
+  SparklesIcon,
+} from '@heroicons/react/24/outline';
+import { FaGithub, FaLinkedinIn } from 'react-icons/fa6';
+import ProjectExplorer from '../components/ProjectExplorer';
+import {
+  AboutSection,
+  ContactSection,
+  EducationSection,
+  ExperienceSection,
+  SkillsSection,
+} from '../components/PortfolioSections';
+import { profile } from '../data/profile';
+import { projects } from '../data/projects';
 import './Home.css';
 
+const featuredProjects = projects
+  .filter((project) => project.live)
+  .slice(0, 3);
+
 const Home = () => {
-    return (
-        <>
-            <main className="home-main-section" >
-                <section>
-                    <div className='main-heading'>
-                        <h1 className='heading-two'>Sharayu Borude</h1>
-                        <h2 className='heading-three'>Full Stack Developer | MERN </h2>
-                    </div>
-                </section>
+  useEffect(() => {
+    if (
+      !('IntersectionObserver' in window)
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) return undefined;
 
-                <hr className='line-two' />
+    document.documentElement.classList.add('reveal-ready');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-                <div className="para-wrapper">
-                    <p>A dedicated learner exploring Full Stack Development and modern web technologies.</p>
-                    <p>Building my full-stack development journey with React, Node.js, and MongoDB.</p>
-                </div>
-                <div className='home-page-buttons'>
-                    <button className='first-btns'>
-                        <a href="#contact">Contact Me</a>
-                    </button>
-                    <button className='second-btns'>
-                        <a href="https://drive.google.com/file/d/1MQGYp8_QIRPFWbWFGOGRoN-O0h7Js3ga/view?usp=sharing"
-                            target="_blank">Resume</a>
-                    </button>
-                </div>
+    document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove('reveal-ready');
+    };
+  }, []);
 
+  return (
+    <>
+      <section className="hero-section" id="home">
+        <div className="container hero-layout">
+          <div className="hero-copy reveal">
+            <span className="eyebrow">Hello, I'm Sharayu</span>
+            <h1>
+              Exploring AI.
+              <br />
+              Building ideas.
+              <br />
+              <span className="text-gradient">Creating impact.</span>
+            </h1>
+            <p className="hero-role">
+              <span>{profile.role}</span>
+              <span className="role-separator" aria-hidden="true">/</span>
+              <span>{profile.focus}</span>
+            </p>
+            <p className="hero-intro">{profile.summary}</p>
+            <div className="hero-actions">
+              <a className="button button-primary" href="#projects">
+                Explore projects <ArrowRightIcon aria-hidden="true" />
+              </a>
+              <a
+                className="button button-secondary"
+                href={profile.resumeUrl}
+                download="Sharayu_Borude_Resume.pdf"
+              >
+                Download resume <ArrowDownTrayIcon aria-hidden="true" />
+              </a>
+              <a className="button button-secondary" href="#contact">
+                Let's connect <ArrowRightIcon aria-hidden="true" />
+              </a>
+            </div>
+            <div className="hero-socials">
+              <a href={profile.githubUrl} target="_blank" rel="noreferrer">
+                <FaGithub aria-hidden="true" /> GitHub
+              </a>
+              <a href={profile.linkedinUrl} target="_blank" rel="noreferrer">
+                <FaLinkedinIn aria-hidden="true" /> LinkedIn
+              </a>
+              <span className="hero-social-divider" />
+              <span><span className="availability-dot" /> Open to opportunities</span>
+            </div>
+          </div>
 
-                <hr className='line-two' />
+          <div className="hero-bento reveal" aria-label="Portfolio highlights">
+            <div className="hero-monogram surface-card">
+              <div className="monogram-orbit orbit-one" aria-hidden="true" />
+              <div className="monogram-orbit orbit-two" aria-hidden="true" />
+              <span className="monogram-initials">S<span>B</span></span>
+              <div className="monogram-caption">
+                <span className="mono">PORTFOLIO / 2026</span>
+                <strong>Sharayu Borude</strong>
+                <span>Developer · Engineer</span>
+              </div>
+              <SparklesIcon className="monogram-sparkle" aria-hidden="true" />
+            </div>
 
-                <section className='info-two'>
-                    <div>
-                        <h2><strong>Teck Toolbox</strong></h2>
-                        <p>Technologies and Tools I am familiar and work with</p>
-                        <ul className='tech-list'>
-                            <li className='tech-item'>React</li>
-                            <li>Node.js</li>
-                            <li>Express.js</li>
-                            <li>MongoDB</li>
+            <div className="hero-bento-card hero-bento-stack surface-card">
+              <div className="bento-card-head">
+                <span className="bento-symbol"><CodeBracketIcon aria-hidden="true" /></span>
+                <span className="mono">WHAT I BUILD</span>
+              </div>
+              <div className="bento-stack-lines">
+                <span>Interfaces that feel clear</span>
+                <span>Systems that behave reliably</span>
+                <span>AI that has a useful role</span>
+              </div>
+            </div>
 
-                            <li>JavaScript (ES6+)</li>
-                            <li>HTML5</li>
-                            <li>CSS</li>
-                            <li>Git</li>
+            <div className="hero-bento-card hero-bento-feature surface-card">
+              <div className="feature-card-top">
+                <span className="eyebrow">Featured build</span>
+                <span className="feature-index">01 / {String(featuredProjects.length).padStart(2, '0')}</span>
+              </div>
+              <h2>{featuredProjects[0].title}</h2>
+              <p>{featuredProjects[0].subtitle}</p>
+              <Link to="/projects" aria-label="Browse all project details">
+                Explore the work <ArrowUpRightIcon aria-hidden="true" />
+              </Link>
+            </div>
 
-                            <li>Next.js</li>
-                            <li>Mongoose</li>
-                            <li>Vercel</li>
-                            <li>CSS3</li>
+            <div className="hero-bento-note surface-card">
+              <span className="hero-note-icon"><SparklesIcon aria-hidden="true" /></span>
+              <div>
+                <strong>Curious by default.</strong>
+                <span>Grounded in real projects.</span>
+              </div>
+            </div>
+          </div>
+          <a className="hero-scroll" href="#about">
+            <span className="scroll-line" aria-hidden="true" />
+            Scroll to explore
+          </a>
+        </div>
+      </section>
 
-                            <li>GitHub</li>
-                            <li>Bootstrap</li>
-                            <li>Chrome DevTools</li>
-                            <li>Postman</li>
-
-                            <li>Context API</li>
-                            <li>Vite</li>
-                            <li>VS Code</li>
-                            <li>npm / pnpm</li>
-
-                            <li>Netlify</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <hr className='line-two' />
-
-                <section id="contact" className="contact-section">
-                    <h2><strong>Connect Me</strong></h2>
-
-                    <div className="insta-icons">
-                        <span className="insta-icon">
-                            <Link to="https://www.linkedin.com/in/sharayuborude2003/" target="_blank" >
-                                <img src="/assets/linkedin.png" alt="Linkedin" className="insta-icon-size" />
-                            </Link>
-                        </span>
-                        <span className="insta-icon">
-                            <Link to="https://github.com/Sharu2003-27" target="_blank" >
-                                <img src="/assets/github.png" alt="Github" className="insta-icon-size" />
-                            </Link>
-                        </span>
-                        <span className="insta-icon">
-                            <Link to="https://x.com/BorudeShar86201" target="_blank" >
-                                <img src="/assets/twitter.png" alt="Twitter" className="insta-icon-size" />
-                            </Link>
-                        </span>
-                        <span className="insta-icon">
-                            <Link to="https://www.instagram.com/sharu_2003?igsh=MTRlN3UxejA1NmNjNQ==" target="_blank" >
-                                <img src="/assets/instagram.png" alt="Instagram" className="insta-icon-size" />
-                            </Link>
-                        </span>
-                    </div>
-                </section>
-            </main>
-            <hr className='line-one' />
-        </>
-    );
+      <AboutSection />
+      <SkillsSection />
+      <ProjectExplorer />
+      <ExperienceSection />
+      <EducationSection />
+      <ContactSection />
+    </>
+  );
 };
 
 export default Home;

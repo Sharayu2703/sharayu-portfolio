@@ -1,52 +1,39 @@
-# Sharayu Borude | Full Stack Developer Portfolio
+# Sharayu Borude — Portfolio
 
-This is the source code for my professional portfolio website, showcasing my skills as a MERN (MongoDB, Express, React, Node.js) Full Stack Developer.
+A responsive React + Vite portfolio for Sharayu Borude, a Computer Engineering graduate focused on full-stack and AI development. The interface uses a dark Bento-inspired visual system with a curated project archive, skills, experience, education, and contact information.
 
-The site is built with a focus on modern design, responsiveness, and clear presentation of my projects and technical expertise.
+## Run locally
 
----
-
-## Demo Link 
-
-[Live Demo](https://sharayu-portfolio-umber.vercel.app/)
-
----
-
-## Quick Start 
-
-```
-git clone https://github.com/Sharu2003-27/sharayu-.git
-cd <sharayu-portfolio>
+```bash
 npm install
 npm run dev
 ```
 
----
+Create and preview a production build:
 
-## Technologies
+```bash
+npm run build
+npm run preview
+```
 
-- ReactJS
-- React Router
-- Custom CSS
-- Bootstrap
-- Vite
-- Heroicons
-- Custom Assets
+Run the configured lint check:
 
----
-##  Features
-- **Responsive Design**: Optimized for seamless viewing on all devices (mobile, tablet, and desktop).
-- **Project Showcase**: Detailed cards for each project, including live demo links and source code links.
-- Skill Highlight: Dedicated "Tech Toolbox" section listing all familiar technologies.
-- **Smooth Navigation**: Uses react-router-dom for efficient, single-page application navigation.
+```bash
+npm run lint
+```
 
----
+## Structure
 
-## Connect With Me
+- `src/data/profile.js` — profile, social, education, and experience content
+- `src/data/skills.js` — grouped technical skills
+- `src/data/projects.js` — project descriptions, categories, links, and technologies
+- `src/components/` — shared navigation, project explorer/details, and portfolio sections
+- `src/pages/` — home, about, and project routes
+- `public/assets/` — existing project and social imagery
 
-I'm always open to discussing new opportunities, full stack projects, or just connecting with other developers!
+The project archive groups related frontend/backend repositories into one product entry. Project descriptions and links are based on the linked repositories and existing portfolio content; proposed AI integrations are explicitly marked as ideas rather than implemented features.
 
-- [LinkedIn](https://www.linkedin.com/in/sharayuborude2003/)
-- [GitHub](https://github.com/Sharu2003-27)
-- [Twitter](https://x.com/BorudeShar86201)
-- [Instagram](https://www.instagram.com/sharu_2003?igsh=MTRlN3UxejA1NmNjNQ==)
+## Contact form
+
+The contact form submits to the included Express API and stores messages in MongoDB.
+
